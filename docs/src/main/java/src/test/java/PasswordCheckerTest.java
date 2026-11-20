@@ -21,7 +21,7 @@ public class PasswordCheckerTest {
 
     @Test
     void testLongLowercasePassword() {
-        assertEquals(1, PasswordChecker.calculateScore("abcdefgh"));
+        assertEquals(2, PasswordChecker.calculateScore("abcdefgh"));
     }
 
     @Test

@@ -1,28 +1,56 @@
-public class PasswordChecker {
+import org.junit.jupiter.api.Test;
 
-    public static int calculateScore(String password) {
-        int score = 0;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-        if (password == null || password.isEmpty()) {
-            return 0;
-        }
+public class PasswordCheckerTest {
 
-        if (password.length() >= 8) score++;
-        if (password.matches(".*[A-Z].*")) score++;
-        if (password.matches(".*[a-z].*")) score++;
-        if (password.matches(".*[0-9].*")) score++;
-        if (password.matches(".*[^a-zA-Z0-9].*")) score++;
-
-        return score;
+    @Test
+    void testEmptyPassword() {
+        assertEquals(0, PasswordChecker.calculateScore(""));
     }
 
-    public static String getStrength(int score) {
-        if (score <= 2) {
-            return "Weak password";
-        } else if (score <= 4) {
-            return "Medium password";
-        } else {
-            return "Strong password";
-        }
+    @Test
+    void testNullPassword() {
+        assertEquals(0, PasswordChecker.calculateScore(null));
+    }
+
+    @Test
+    void testShortPassword() {
+        assertEquals(3, PasswordChecker.calculateScore("Ab1"));
+    }
+
+    @Test
+    void testLongLowercasePassword() {
+        assertEquals(1, PasswordChecker.calculateScore("abcdefgh"));
+    }
+
+    @Test
+    void testUppercasePassword() {
+        assertEquals(2, PasswordChecker.calculateScore("ABCDEFGH"));
+    }
+
+    @Test
+    void testPasswordWithDigits() {
+        assertEquals(3, PasswordChecker.calculateScore("abcdefgh1"));
+    }
+
+    @Test
+    void testStrongPassword() {
+        assertEquals(5, PasswordChecker.calculateScore("Hello123!"));
+    }
+
+    @Test
+    void testWeakStrength() {
+        assertEquals("Weak password", PasswordChecker.getStrength(2));
+    }
+
+    @Test
+    void testMediumStrength() {
+        assertEquals("Medium password", PasswordChecker.getStrength(3));
+    }
+
+    @Test
+    void testStrongStrength() {
+        assertEquals("Strong password", PasswordChecker.getStrength(5));
     }
 }
